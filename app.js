@@ -1,24 +1,23 @@
-let string=''
-let buttons=document.querySelectorAll('.Button')
+let inputField = document.getElementById('calcInput');
+let expression = '';
 
-Array.from(buttons).forEach((Button)=>{
-    Button.addEventListener('click',(e)=>{
-            if(e.target.innerHTML == '='){
-            string=eval(string);    
-            document.querySelector('input').value=string
+document.querySelectorAll('.Button').forEach((button) => {
+    button.addEventListener('click', (e) => {
+        const buttonText = e.target.innerHTML;
 
-    }
-    else if(e.target.innerHTML == 'C'){
-            string=''   
-            document.querySelector('input').value=string
-    
-    }
-    else
-    {
-        string=string+e.target.innerHTML;
-        document.querySelector('input').value=string
-    }
-
-    })   
-
-})
+        if (buttonText === '=') {
+            try {
+                expression = eval(expression);
+                inputField.value = expression;
+            } catch (error) {
+                inputField.value = 'Error';
+            }
+        } else if (buttonText === 'C') {
+            expression = '';
+            inputField.value = expression;
+        } else {
+            expression += buttonText;
+            inputField.value = expression;
+        }
+    });
+});
